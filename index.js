@@ -13,9 +13,17 @@ const path = require("path");
 const { sync: spawnSync } = require("cross-spawn");
 const { existsSync, readFileSync } = require("fs");
 
+const colors = {
+  red: "\x1b[31m",
+  yellow: "\x1b[33m",
+};
+
 if (!filePath) {
-  console.error("You have to specify an entry file.");
-  return console.error("USAGE: yarn-global-restore <file> [--keep-versions]");
+  console.error(colors.red, "You have to specify an entry file.");
+  return console.error(
+    colors.yellow,
+    "USAGE: yarn-global-restore <file> [--keep-versions]"
+  );
 }
 
 let fileExists = false;
@@ -30,13 +38,13 @@ if (existsSync(path.join(filePath))) {
 }
 
 if (!fileExists) {
-  return console.error("File does not exist");
+  return console.error(colors.red, "File does not exist");
 }
 
 let { dependencies } = JSON.parse(readFileSync(filePath));
 
 if (!dependencies) {
-  return console.error("Invalid list file");
+  return console.error(colors.red, "Invalid list file");
 }
 
 for (const key of Object.keys(dependencies)) {
