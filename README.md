@@ -7,7 +7,7 @@ Yarn does not offer a backup/restore feature, so I created this script.
 Backup the global package.json file
 
 ```sh
-  $ cp $(yarn global dir)/package.json /path/to/your/backup/folder
+$ cp $(yarn global dir)/package.json /path/to/your/backup/folder
 ```
 
 ## Usage
