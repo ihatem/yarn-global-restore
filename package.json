@@ -1,5 +1,6 @@
 {
   "name": "yarn-global-restore",
+  "version": "1.0.0",
   "main": "index.js",
   "bin": {
     "yarn-global-restore": "./index.js"
