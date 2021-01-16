@@ -1,0 +1,11 @@
+{
+  "name": "yarn-global-restore",
+  "main": "index.js",
+  "bin": {
+    "yarn-global-restore": "./index.js"
+  },
+  "dependencies": {
+    "yarn-api": "^1.1.0"
+  },
+  "license": "UNLICENSED"
+}
