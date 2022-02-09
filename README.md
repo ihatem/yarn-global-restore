@@ -14,9 +14,9 @@ $ cp $(yarn global dir)/package.json /path/to/your/backup/folder
 
 ```sh
 # use without install
-$ npx https://github.com/ihatem/yarn-global-restore.git </path/to/package.json> [--keep-versions]
+$ npx yarn-global-restore </path/to/package.json> [--keep-versions]
 # install globally
-$ yarn global add https://github.com/ihatem/yarn-global-restore.git
+$ yarn global add yarn-global-restore
 ```
 
 `--keep-versions` _(optional)_: install with saved versions, otherwise install newest versions
