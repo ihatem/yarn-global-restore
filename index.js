@@ -1,17 +1,13 @@
 #!/usr/bin/env node
+const path = require("path");
+const { sync: spawnSync } = require("cross-spawn");
+const { existsSync, readFileSync } = require("fs");
+
 const preparedDeps = [];
 
 let [, , filePath, keepVersions] = process.argv;
 
-keepVersions =
-  keepVersions && keepVersions.toLowerCase() == "--keep-versions"
-    ? true
-    : false;
-
-const path = require("path");
-
-const { sync: spawnSync } = require("cross-spawn");
-const { existsSync, readFileSync } = require("fs");
+keepVersions = keepVersions && keepVersions.toLowerCase() == "--keep-versions";
 
 const colors = {
   red: "\x1b[31m",
@@ -41,17 +37,20 @@ if (!fileExists) {
   return console.error(colors.red, "File does not exist");
 }
 
-let { dependencies } = JSON.parse(readFileSync(filePath));
+try {
+  let { dependencies } = JSON.parse(readFileSync(filePath));
+  for (const key of Object.keys(dependencies)) {
+    preparedDeps.push(`${key}${keepVersions ? "@" + dependencies[key] : ""}`);
+  }
 
-if (!dependencies) {
+  // Install every package separately to prevent exit when one package is invalid
+  for (const dep of preparedDeps) {
+    const { error } = spawnSync("yarn", ["global", "add", dep], {
+      stdio: "inherit",
+    });
+
+    if (error) console.error(colors.red, error);
+  }
+} catch (err) {
   return console.error(colors.red, "Invalid list file");
 }
-
-for (const key of Object.keys(dependencies)) {
-  preparedDeps.push(`${key}${keepVersions ? "@" + dependencies[key] : ""}`);
-}
-const { error } = spawnSync("yarn", ["global", "add", ...preparedDeps], {
-  stdio: "inherit",
-});
-
-if (error) throw error;

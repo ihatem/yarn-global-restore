@@ -5,8 +5,8 @@
   "bin": {
     "yarn-global-restore": "./index.js"
   },
+  "license": "UNLICENSED",
   "dependencies": {
-    "yarn-api": "^1.1.0"
-  },
-  "license": "UNLICENSED"
+    "cross-spawn": "^7.0.3"
+  }
 }
